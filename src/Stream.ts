@@ -27,7 +27,7 @@ export class Library {
     /**
      * @description Get a video from the library
      */
-    async GetVideo(videoId: number): Promise<(
+    async GetVideo(videoId: string): Promise<(
         { status: StatusResponse.OK, data: Video } |
         { status: StatusResponse.UNAUTHORIZED | StatusResponse.NOT_FOUND | StatusResponse.INTERNAL_SERVER_ERROR | StatusResponse.UNDEFINED, data: null }
     )> {

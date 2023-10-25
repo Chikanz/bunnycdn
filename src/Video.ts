@@ -14,9 +14,9 @@ export interface UpdateParams {
 export default class Video {
     library: Library;
     data: APIVideo;
-    videoId: number;
+    videoId: string;
 
-    constructor(library: Library, data: APIVideo, videoId: number) {
+    constructor(library: Library, data: APIVideo, videoId: string) {
         this.library = library;
         this.data = data;
         this.videoId = videoId;

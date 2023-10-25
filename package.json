@@ -4,7 +4,8 @@
   "description": "Use the unofficial BunnyCDN library quickly and easily with Javascript",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
   },
   "keywords": [
     "bunnycdn",
