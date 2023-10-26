@@ -594,4 +594,70 @@ export class Library {
             data: null
         }
     }
+
+    /**
+     * @description Delete a video from the library permanently
+     */
+    async DeleteVideo(videoId: string): Promise<(
+        { status: StatusResponse.OK } |
+        { status: StatusResponse.UNAUTHORIZED | StatusResponse.NOT_FOUND | StatusResponse.INTERNAL_SERVER_ERROR | StatusResponse.UNDEFINED, data: null }
+    )> {
+        const url = `https://video.bunnycdn.com/library/${this.libraryId}/videos/${videoId}`;
+        const request = await fetch(url, {
+            method: "DELETE",
+            headers: {
+                accept: 'application/json',
+                AccessKey: this.accessKey
+            }
+        });
+
+        const status = request.status;
+        let body = await request.json();
+
+        if (status === 200) {
+
+            body = {
+                ...body,
+                dateUploaded: new Date(body.dateUploaded),
+                transcodingMessages: body.transcodingMessages.map((message: any) => {
+                    return {
+                        ...message,
+                        date: new Date(message.timeStamp)
+                    }
+                })
+            }
+
+            return {
+                status: StatusResponse.OK,
+            }
+        }
+
+        if (status === 401) {
+            return {
+                status: StatusResponse.UNAUTHORIZED,
+                data: null
+            }
+        }
+
+        if (status === 404) {
+            return {
+                status: StatusResponse.NOT_FOUND,
+                data: null
+            }
+        }
+
+        if (status === 500) {
+            return {
+                status: StatusResponse.INTERNAL_SERVER_ERROR,
+                data: null
+            }
+        }
+
+        return {
+            status: StatusResponse.UNDEFINED,
+            data: null
+        }
+
+    }
+
 }
